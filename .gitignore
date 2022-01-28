@@ -1,0 +1,6 @@
+*egg-info
+.pytest_cache
+.venv
+.idea
+__pycache__
+db_access.ini
