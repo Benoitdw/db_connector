@@ -2,6 +2,7 @@ import mysql.connector
 from configparser import ConfigParser
 from .db_handler_config import DbAccess
 
+
 class Connection():
     def __init__(self, logging):
         self.logging = logging
@@ -12,6 +13,7 @@ class Connection():
         return self.cursor
 
     def __exit__(self, exc_type, exc_val, exc_tb):
+        self.connector.commit()
         self.connector.close()
         self.cursor.close()
 
@@ -43,6 +45,14 @@ class MysqlHandler:
         with Connection(self.logging) as cursor:
             cursor.execute(query)
             return cursor.fetchall()
+
+    def insert_value(self, query, values):
+        with Connection(self.logging) as cursor:
+            if isinstance(values, list):
+                cursor.executemany(query, values)
+            else:
+                cursor.execute(query, values)
+
 
     def _read_logging(self, config_file):
         config_parser = ConfigParser()
