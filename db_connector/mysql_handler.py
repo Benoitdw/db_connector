@@ -53,6 +53,10 @@ class MysqlHandler:
             else:
                 cursor.execute(query, values)
 
+    def update_value(self, query):
+        with Connection(self.logging) as cursor:
+            cursor.execute(query)
+
 
     def _read_logging(self, config_file):
         config_parser = ConfigParser()
