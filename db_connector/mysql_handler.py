@@ -9,7 +9,7 @@ class Connection():
 
     def __enter__(self):
         self.connector = self._create_connector(self.logging)
-        self.cursor = self.connector.cursor()
+        self.cursor = self.connector.cursor(buffered=True)
         return self.cursor
 
     def __exit__(self, exc_type, exc_val, exc_tb):
